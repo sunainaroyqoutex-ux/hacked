@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SYSTEM_CRITICAL_OVERRIDE</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF41;
+            font-family: "Courier New", Courier, monospace;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        #terminal {
+            padding: 20px;
+            height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .header {
+            background: #ff0000;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: blink 0.5s infinite;
+        }
+
+        .stats-bar {
+            border-top: 1px solid #00FF41;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0, 50, 0, 0.3);
+        }
+
+        .danger { color: #ff4444; font-weight: bold; }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.1; }
+            100% { opacity: 1; }
+        }
+
+        .line { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="header">⚠️ SYSTEM BREACH DETECTED: UNAUTHORIZED ACCESS RECORDED ⚠️</div>
+
+<div id="terminal"></div>
+
+<div class="stats-bar">
+    <div>STATUS: <span class="danger">ENCRYPTING...</span></div>
+    <div>ACTIVE UPLINKS: <span id="hackerCount" class="danger">0</span></div>
+    <div>DATA LEAKED: <span id="leak">0.00</span> GB</div>
+</div>
+
+<script>
+    const terminal = document.getElementById('terminal');
+    const hackerElement = document.getElementById('hackerCount');
+    const leakElement = document.getElementById('leak');
+    
+    let hackers = 0;
+    let leaked = 0;
+
+    const messages = [
+        "Initializing backdoor...",
+        "Bypassing firewall...",
+        "Accessing Kernel level 0...",
+        "Root privileges granted.",
+        "Downloading /USER/SENSITIVE_DOCUMENTS/...",
+        "Connection established from 192.168.1.104",
+        "Injecting malicious payload...",
+        "Proxy chain: [DE] -> [RU] -> [CN] -> [US]",
+        "System registry modified.",
+        "Brute forcing admin password...",
+        "AES-256 Encryption key generated.",
+        "Disabling Windows Defender...",
+        "Remote shell active."
+    ];
+
+    function addLine() {
+        const line = document.createElement('div');
+        line.className = 'line';
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        line.innerText = `[${new Date().toLocaleTimeString()}] > ${msg}`;
+        terminal.prepend(line);
+        
+        if (terminal.childNodes.length > 25) {
+            terminal.removeChild(terminal.lastChild);
+        }
+    }
+
+    // Rapidly increase hacker count to 320
+    const hackerInterval = setInterval(() => {
+        if (hackers < 320) {
+            hackers += Math.floor(Math.random() * 5) + 1;
+            if (hackers > 320) hackers = 320;
+            hackerElement.innerText = hackers;
+        }
+    }, 100);
+
+    // Update lines and data leak
+    setInterval(() => {
+        addLine();
+        leaked += Math.random() * 0.5;
+        leakElement.innerText = leaked.toFixed(2);
+    }, 400);
+
+</script>
+</body>
+</html>
